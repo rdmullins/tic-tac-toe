@@ -25,6 +25,22 @@ To complete the assignment, you must complete the following:
 
 ---
 
+# MoSCoW
+
+|Must Have|Should Have|Could Have|Won't Have
+|---|---|---|---|
+|Players know whose turn it is|README.md |Use classes |AI? |
+|Game tiles only clickable once|Players can enter names |Track wins/losses (local storage) |Connect 4 Variation |
+|Notification on game end (win/tie)| |Link to rules in modal |Go Variation (see Alyssa's post) |
+|'Restart Game' button (resets state)| | | |
+|Uses X and O| | | |
+|Players interact via clicks| | | | 
+|Game continues until win state or tie| | | |
+|Single `div` in HTML (dynamic element creation)| | | |
+
+
+---
+
 # PSEUDOCODE
 
 ## Objects
@@ -53,7 +69,18 @@ Also need to track
 
 ### updateState()
 
+### updateBoardState()
+
 ### updateDisplay()
 
+### handleClick()
+
+### changeTurn()
+
+### endGame()
+---
+# UX Walkthrough
+1. BEGIN
+1. 
 
 
