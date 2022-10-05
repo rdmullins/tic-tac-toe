@@ -46,7 +46,7 @@ function checkSquare(square) {
     }
 };
 
-function checkForWin() {
+function checkForWin(playerSymbol) {
 let b = gameState.gameBoard;
     if ((
         (b[0] === b[1]) &&
@@ -82,6 +82,7 @@ let b = gameState.gameBoard;
         (b[2] !== "")
     )) {
         console.log("Game Over!");
+        console.log(playerSymbol, " wins!!!");
         gameState.gameOver = true;
     }        
 };
@@ -95,6 +96,7 @@ console.log("Start game.");
 renderBoard();
 
 while (gameState.gameOver !== true) {
+    //console.log(clear());
     let playerName = "";
     let playerSymbol = "";
     console.log("Turn number ", gameState.turn);
@@ -116,7 +118,7 @@ while (gameState.gameOver !== true) {
     } else {
         console.log("Invalid selection.");
     };
-    checkForWin();
+    checkForWin(playerSymbol);
     gameState.turn++;
     if (gameState.whoseTurn == 1) {
         gameState.whoseTurn = 2;
