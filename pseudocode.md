@@ -81,6 +81,11 @@ Also need to track
 ---
 # UX Walkthrough
 1. BEGIN
+1. GET player info or accept defaults
+    1. BEGIN
+    1. GET player1
+    1. GET player2
+    1. END
 1. 
 
 
