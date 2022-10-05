@@ -5,26 +5,10 @@ console.log("Tic-Tac-Console");
 
 let gameState = {
     playerName1: "X",
+    playerSymbol1: "X",
     playerName2: "O",
+    playerSymbol2: "O",
     gameBoard: ["", "", "", "", "", "", "", "", ""]
-
-
-    // boardState = {
-    //     squareIndex: 0,
-    //     active: true,
-    //     hasX: false,
-    //     hasO: false
-    // },
-
-    // checkForWin() {
-    //     console.log("This is the function inside the gameState object to check for a win.");
-    // },
-
-    // updateBoardState(player, square) {
-    //     console.log("This updates the game board object.");
-    //     console.log("Player is: ", player);
-    //     console.log("Selected square is:" , square);
-    // }
 };
 
 function updateState() {
