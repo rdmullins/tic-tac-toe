@@ -86,6 +86,20 @@ Also need to track
     1. GET player1
     1. GET player2
     1. END
-1. 
+1. INITIALIZE the game
+    1. BEGIN
+    1. CREATE blank board
+    1. ADD event handlers
+    1. INITIALIZE win states
+    1. END
+1. GAME PLAY
+    1. BEGIN
+    1. PLAYER turn
+    1. UPDATE game state
+    1. UPDATE board state
+    1. RENDER new game board
+    1. CHECK for win
+    1. END (alternating loop until win=true)
+1. END
 
 
