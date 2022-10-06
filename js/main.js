@@ -7,7 +7,7 @@ let gameState = {
   playerName2: "O",
   playerSymbol2: "O",
   gameBoard: ["", "", "", "", "", "", "", "", ""],
-  clickedID: "";
+  clickedID: "",
   turn: 1,
   gameOver: false,
   whoseTurn: 1
@@ -48,6 +48,10 @@ function buildUI() {
       newButton.setAttribute('id', 'hamburger');
       target.appendChild(newButton);
     }
+
+    function genericModalToggle(incomingID) {
+
+    };
   
     function addModalTrigger(elementID, destination) {
       let e = document.getElementById(elementID);
@@ -118,6 +122,12 @@ function buildUI() {
     createElement("app", "footer", [], "footer-info");
     createElement("footer-info", "h6", ["text-center", "fixed-bottom"], "favicon-attribution", "FavIcon provided by https://www.flaticon.com/free-icons/toy\nToy icons created by Freepik - Flaticon");
   
+    // Non-Button-Activated Modals
+    createElement("appContainer", "div", [], "invalidMoveTrigger");
+    addModalTrigger("invalidMoveTrigger", "invalidMoveModal");
+    createElement("appContainer", "div", [], "newGameModalTrigger");
+    addModalTrigger("newGameModalTrigger", "newGameModal");
+
     // About Modal
     createElement("appContainer", "div", ["modal", "fade"], "aboutModal");
     createElement("aboutModal", "div", ["modal-dialog"], "aboutDialog");
@@ -145,8 +155,8 @@ function buildUI() {
     addModalCloseButton("contactFooterCloseButton");
 
     // Invalid Move Modal
-    createElement("appContainer", "div", ["modal", "fade"], "invalid-move-modal");
-    createElement("invalid-move-modal", "div", ["modal-dialog"], "invalidMoveDialog");
+    createElement("appContainer", "div", ["modal", "fade"], "invalidMoveModal");
+    createElement("invalidMoveModal", "div", ["modal-dialog"], "invalidMoveDialog");
     createElement("invalidMoveDialog", "div", ["modal-content"], "invalidMoveContent");
     createElement("invalidMoveContent", "div", ["modal-header"], "invalidMoveHeader");
     createElement("invalidMoveHeader", "h5", ["modal-title"], "invalidMoveTitle", "Error");
