@@ -1,6 +1,17 @@
 // Tic-Tac-Toe
 // by Roger Mullins
 
+let gameState = {
+  playerName1: "X",
+  playerSymbol1: "X",
+  playerName2: "O",
+  playerSymbol2: "O",
+  gameBoard: ["", "", "", "", "", "", "", "", ""],
+  turn: 1,
+  gameOver: false,
+  whoseTurn: 1
+};
+
 function tileClick(address) {
   console.log("You clicked a button! ", address, ", to be specific.");
 }
