@@ -15,11 +15,48 @@ let gameState = {
 
 function tileClick(address) {
   console.log("You clicked a button! ", address, ", to be specific.");
-}
+  let gameSquareIndex = 0;
+
+  switch (address) {
+    case "game-board-square-1-1":
+      //console.log("That translates to array index 0.);
+      gameSquareIndex = 0;
+      break;
+    case "game-board-square-1-2":
+      gameSquareIndex = 1;
+      break;
+    case "game-board-square-1-3":
+      gameSquareIndex = 2;
+      break;
+    case "game-board-square-2-1":
+      gameSquareIndex = 3;
+      break;
+    case "game-board-square-2-2":
+      gameSquareIndex = 4;
+      break;
+    case "game-board-square-2-3":
+      gameSquareIndex = 5;
+      break;
+    case "game-board-square-3-1":
+      gameSquareIndex = 6;
+      break;
+    case "game-board-square-3-2":
+      gameSquareIndex = 7;
+      break;
+    case "game-board-square-3-3":
+      gameSquareIndex = 8;
+      break;
+  }; // end case-switch
+
+  console.log("Square clicked was ", address);
+  console.log("That translates to game board array element ", gameSquareIndex);
+
+};
 
 function newGame() {
-  console.log("This is the new game function.");
-
+  //console.log("This is the new game function.");
+  const showNewGame = new bootstrap.Modal("#newGameModal");
+  showNewGame.show("newGameModalTrigger");
 }
 
 // show	Manually opens a modal. Returns to the caller before the modal has actually been shown (i.e. before the shown.bs.modal event occurs). Also, you can pass a DOM element as an argument that can be received in the modal events (as the relatedTarget property). (i.e. const modalToggle = document.getElementById('toggleMyModal'); myModal.show(modalToggle).
@@ -49,9 +86,9 @@ function buildUI() {
       target.appendChild(newButton);
     }
 
-    function genericModalToggle(incomingID) {
+    // function genericModalToggle(incomingID) {
 
-    };
+    // };
   
     function addModalTrigger(elementID, destination) {
       let e = document.getElementById(elementID);
@@ -117,6 +154,8 @@ function buildUI() {
     resetRow.setAttribute("style", "height: 20vh");
     createElement("reset-button-row", "div", ["col", "text-center"], "reset-button-col");
     createElement("reset-button-col", "button", ["btn", "btn-primary"], "reset-button", "Reset Game");
+    let resetButton = document.getElementById("reset-button");
+    resetButton.setAttribute("onclick", "newGame()");
 
     // Footer (Attribution of FavIcon and API)
     createElement("app", "footer", [], "footer-info");
@@ -153,7 +192,7 @@ function buildUI() {
     createElement("contactContent", "div", ["modal-footer"], "contactFooter");
     createElement("contactFooter", "button", ["btn", "btn-secondary"], "contactFooterCloseButton", "Dismiss");
     addModalCloseButton("contactFooterCloseButton");
-
+    
     // Invalid Move Modal
     createElement("appContainer", "div", ["modal", "fade"], "invalidMoveModal");
     createElement("invalidMoveModal", "div", ["modal-dialog"], "invalidMoveDialog");
@@ -183,3 +222,5 @@ function buildUI() {
 };
 
   buildUI();
+  newGame();
+  //const myModalAlternative = new bootstrap.Modal('#myModal', options)
