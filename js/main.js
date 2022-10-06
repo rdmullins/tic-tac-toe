@@ -6,15 +6,38 @@ let gameState = {
   playerSymbol1: "X",
   playerName2: "O",
   playerSymbol2: "O",
-  gameBoard: ["", "", "", "", "", "", "", "", ""],
+  gameBoard: ["", "", "X", "", "", "", "", "O", ""],
   clickedID: "",
   turn: 1,
   gameOver: false,
   whoseTurn: 1
 };
 
+function updateDisplay() {
+  let e = document.getElementById("whose-turn-text");
+  e.innerText = `Turn number ${gameState.turn}.\nIt's ${gameState.playerName1}'s turn.\nChoose an unoccupied square.`;
+  for (let i=1; i<=3; i++) {
+    for (let j=1; j<=3; j++) {
+      e = document.getElementById(`game-board-square-${i}-${j}`);
+      e.innerText = gameState.gameBoard[convertTileAddressToArrayIndex(`game-board-square-${i}-${j}`)];
+    }
+  }
+};
+
 function tileClick(address) {
-  console.log("You clicked a button! ", address, ", to be specific.");
+  console.log("Tile click.");
+  let gameSquareIndex = convertTileAddressToArrayIndex(address);
+  if (checkSquare(gameSquareIndex)) { 
+    gameState.clickedID = gameSquareIndex;
+    gamePlay(gameSquareIndex);
+    
+  } else {
+    invalidMove();
+  }
+};
+
+function convertTileAddressToArrayIndex(address) {
+  //console.log("You clicked a button! ", address, ", to be specific.");
   let gameSquareIndex = 0;
 
   switch (address) {
@@ -48,10 +71,65 @@ function tileClick(address) {
       break;
   }; // end case-switch
 
-  console.log("Square clicked was ", address);
-  console.log("That translates to game board array element ", gameSquareIndex);
-
+  return(gameSquareIndex);
+  // console.log("Square clicked was ", address);
+  // console.log("That translates to game board array element ", gameSquareIndex);
 };
+
+function invalidMove() {
+  console.log("That's an invalid move.");
+  // this will work the same as the newGame function as far as the modal is concerned.
+}
+
+function checkSquare(square) {
+  console.log("Welcome to the checkSquare function!");
+  if (gameState.gameBoard[square] === "") {
+      return true;
+  } else {
+      return false;
+  }
+};
+
+function checkForWin(playerSymbol) {
+  let b = gameState.gameBoard;
+      if ((
+          (b[0] === b[1]) &&
+          (b[1] === b[2]) &&
+          (b[0] !== "")
+      ) || (
+          (b[3] === b[4]) &&
+          (b[4] === b[5]) &&
+          (b[3] !== "")
+      ) || (
+          (b[6] === b[7]) &&
+          (b[7] === b[8]) &&
+          (b[6] !== "")
+      ) || (
+          (b[0] === b[3]) &&
+          (b[3] === b[6]) &&
+          (b[0] !== "")
+      ) || (
+          (b[1] === b[4]) &&
+          (b[4] === b[7]) &&
+          (b[1] !== "")
+      ) || (
+          (b[2] === b[5]) &&
+          (b[5] === b[8]) &&
+          (b[2] !== "")
+      ) || (
+          (b[0] === b[4]) &&
+          (b[4] === b[8]) &&
+          (b[0] !== "")
+      ) || (
+          (b[2] === b[4]) &&
+          (b[4] === b[6]) &&
+          (b[2] !== "")
+      )) {
+          console.log("Game Over!");
+          console.log(playerSymbol, " wins!!!");
+          gameState.gameOver = true;
+      }        
+  };
 
 function newGame() {
   //console.log("This is the new game function.");
@@ -59,7 +137,43 @@ function newGame() {
   showNewGame.show("newGameModalTrigger");
 }
 
-// show	Manually opens a modal. Returns to the caller before the modal has actually been shown (i.e. before the shown.bs.modal event occurs). Also, you can pass a DOM element as an argument that can be received in the modal events (as the relatedTarget property). (i.e. const modalToggle = document.getElementById('toggleMyModal'); myModal.show(modalToggle).
+function gamePlay(address) {
+  console.log("Incoming address is ", address);
+  while (gameState.gameOver !== true) {
+    //console.log(clear());
+    //let playerName = "";
+    //let playerSymbol = "";
+    //console.log("Turn number ", gameState.turn);
+    
+    // if (gameState.whoseTurn == 1) {
+    //     playerName = gameState.playerName1;
+    //     playerSymbol = gameState.playerSymbol1;
+    // } else {
+    //     playerName = gameState.playerName2;
+    //     playerSymbol = gameState.playerSymbol2;
+    // }
+    // console.log(`It is ${playerName}'s turn.`);
+    // let choice = prompt(`${playerName}, choose a game square 1-9.`);
+
+    // if (checkSquare(address)) {
+    //     console.log("Valid square selection.");
+    //     console.log(playerName, " plays square number ", choice);
+    //     updateBoard(playerSymbol, choice-1);
+    //     console.log("Updated game board:");
+    //     renderBoard();
+    // } else {
+    //     console.log("Invalid selection.");
+    // };
+
+    //checkForWin(playerSymbol);
+    gameState.turn++;
+    if (gameState.whoseTurn == 1) {
+        gameState.whoseTurn = 2;
+    } else {
+        gameState.whoseTurn = 1;
+    }
+  }
+};
 
 function buildUI() {
     // Creates HTML elements
@@ -223,4 +337,5 @@ function buildUI() {
 
   buildUI();
   newGame();
+  updateDisplay();
   //const myModalAlternative = new bootstrap.Modal('#myModal', options)
