@@ -2,11 +2,11 @@
 // by Roger Mullins
 
 let gameState = {
-  playerName1: "X",
+  playerName1: "Justin",
   playerSymbol1: "X",
-  playerName2: "O",
+  playerName2: "Jonathan",
   playerSymbol2: "O",
-  gameBoard: ["", "", "X", "", "", "", "", "O", ""],
+  gameBoard: ["", "", "", "", "", "", "", "", ""],
   clickedID: "",
   turn: 1,
   gameOver: false,
@@ -14,8 +14,14 @@ let gameState = {
 };
 
 function updateDisplay() {
+  let currentPlayer = "";
+  if (gameState.turn % 2 != 0) {
+    currentPlayer = gameState.playerName1;
+  } else {
+    currentPlayer = gameState.playerName2;
+  };
   let e = document.getElementById("whose-turn-text");
-  e.innerText = `Turn number ${gameState.turn}.\nIt's ${gameState.playerName1}'s turn.\nChoose an unoccupied square.`;
+  e.innerText = `Turn number ${gameState.turn}.\nIt's ${currentPlayer}'s turn.\nChoose an unoccupied square.`;
   for (let i=1; i<=3; i++) {
     for (let j=1; j<=3; j++) {
       e = document.getElementById(`game-board-square-${i}-${j}`);
@@ -134,8 +140,16 @@ function checkForWin(playerSymbol) {
 
 function newGame() {
   //console.log("This is the new game function.");
+  gameState.playerName1 = "X";
+  gameState.playerName2 = "O";
+  gameState.gameBoard = ["", "", "", "", "", "", "", "", ""];
+  gameState.gameOver = false;
+  gameState.turn = 1;
+  gameState.whoseTurn = "X";
+
   const showNewGame = new bootstrap.Modal("#newGameModal");
   showNewGame.show("newGameModalTrigger");
+  updateDisplay();
 };
 
 function gamePlay(address) {
@@ -143,12 +157,12 @@ function gamePlay(address) {
   if (gameState.gameOver !== true) {
     gameState.gameBoard[address] = gameState.whoseTurn;
     gameState.turn++;
+    checkForWin(gameState.whoseTurn);
     if (gameState.whoseTurn == "X") {
         gameState.whoseTurn = "O";
     } else {
         gameState.whoseTurn = "X";
     };
-    checkForWin(gameState.whoseTurn);
   };
   updateDisplay();
 };
@@ -337,10 +351,36 @@ function buildUI() {
     createElement("newGameHeader", "button", ["btn-close"], "newGameHeaderBtn");
     addModalCloseButton("newGameHeaderBtn");
     createElement("newGameContent", "div", ["modal-body"], "newGameBody", "This is the new game modal!");
+
+    // Player Names Input
+    createElement("newGameContent", "form", ["p-2"], "player-names-form");
+    createElement("player-names-form", "div", ["mb-3"], "player-names-1-label-div");
+    createElement("player-names-form", "input", ["form-control"], "player-name-1-input-box");
+    let playerName1InputBox = document.getElementById("player-name-1-input-box");
+    playerName1InputBox.setAttribute("aria-describedby", "Player Name One");
+    createElement("player-names-1-label-div", "label", ["form-label"], "player-name-1-label", "Player 1 Name");
+    let playerName1Label = document.getElementById("player-name-1-label");
+    playerName1Label.setAttribute("for", "player-name-1-input-box");
+    createElement("player-names-1-label-div", "div", ["form-text"], "player-1-helper-text", "Leave blank to accept default (X)");
+    createElement("player-names-form", "div", ["mb-3"], "player-names-2-input-box-div");
+    createElement("player-names-form", "input", ["form-control"], "player-name-2-input-box");
+    createElement("player-names-2-input-box-div", "label", ["form-label"], "player-name-2-label", "Player 2 Name");
+    let playerName2Label = document.getElementById("player-name-2-label");
+    playerName2Label.setAttribute("for", "player-names-2-input-div");
+    createElement("player-names-2-input-box-div", "div", ["form-text"], "player-2-helper-text", "Leave blank to accept default (O)");
+    createElement("player-names-form", "button", ["btn", "btn-primary"], "player-names-form-button", "Let's Play!");
+    let playerNamesFormButton = document.getElementById("player-names-form-button");
+    playerNamesFormButton.setAttribute("onclick", "updateNames()");
+    playerNamesFormButton.setAttribute("type", "submit");
     createElement("newGameContent", "div", ["modal-footer"], "newGameFooter");
     createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Dismiss");
     addModalCloseButton("newGameFooterCloseButton");
 };
+
+function updateNames() {
+  console.log("This is the updateNames function.");
+  //updateDisplay();
+}
 
   buildUI();
   newGame();
