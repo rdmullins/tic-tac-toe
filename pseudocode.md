@@ -52,14 +52,14 @@ To complete the assignment, you must complete the following:
 - playerName1 (initially "X")
 - playerName2 (initially "Y")
 
-### boardState
+### boardState XX DID NOT USE XX
 Generally each square has three possible states:
 - Clear
 - X
 - O
 
 Also need to track
-- Active (boolean)
+- Active (boolean)~
 
 ## Functions
 
@@ -81,25 +81,58 @@ Also need to track
 ---
 # UX Walkthrough
 1. BEGIN
-1. GET player info or accept defaults
+1. CREATE navbar
+1. SELECT game type (modal w/ radio buttons)
     1. BEGIN
-    1. GET player1
-    1. GET player2
+    1. One player (vs computer)
+    1. Two player
+    1. UPDATE game state
+    1. END
+1. SET player information (modal with combination text input or radio button for default)
+    1. BEGIN
+    1. IF two-player game:
+        1. BEGIN
+        1. GET player1 OR keep default
+        1. GET player2 OR keep default
+        1. UPDATE gameState
+        1. END
+    1. IF one-player:
+        1. BEGIN
+        1. GET player1 or keep default
+        1. END
     1. END
 1. INITIALIZE the game
     1. BEGIN
     1. CREATE blank board
+    1. CREATE turn indicator
+    1. CREATE wins record (inside gameState)
+    1. CREATE restart game button
     1. ADD event handlers
     1. INITIALIZE win states
     1. END
 1. GAME PLAY
     1. BEGIN
+    1. SET current player in gameState
     1. PLAYER turn
-    1. UPDATE game state
-    1. UPDATE board state
-    1. RENDER new game board
-    1. CHECK for win
-    1. END (alternating loop until win=true)
+        1. BEGIN
+        1. UPDATE 'whose turn' indicator
+        1. -> Player clicks a square
+            1. BEGIN
+            1. CHECK if square is valid
+                1. BEGIN
+                1. IF square is occupied already, NOT valid
+                1. END
+            1. UPDATE game board
+            1. CHECK for win
+            1. UPDATE gameState
+            1. INCREMENT turn count
+            1. SWITCH current player
+            1. END
+        1. END (loop back until game over)
+    1. UPDATE wins/loss information display
+    1. DISPLAY 'new game?' modal
+    1. END
 1. END
 
 
+Stretch - add CSS transition on block so it rotates
