@@ -85,6 +85,8 @@ function convertTileAddressToArrayIndex(address) {
 
 function invalidMove() {
   console.log("That's an invalid move.");
+  const showInvalidMove = new bootstrap.Modal("#invalidMoveModal");
+  showInvalidMove.show("invalidMoveModalTrigger");
   // this will work the same as the newGame function as far as the modal is concerned.
 }
 
@@ -352,6 +354,8 @@ function buildUI() {
     addModalCloseButton("newGameHeaderBtn");
     createElement("newGameContent", "div", ["modal-body"], "newGameBody", "This is the new game modal!");
 
+    /* Man I really wanted to use this. Apparently there's no good way to retrieve form data.
+
     // Player Names Input
     createElement("newGameContent", "form", ["p-2"], "player-names-form");
     createElement("player-names-form", "div", ["mb-3"], "player-names-1-label-div");
@@ -370,17 +374,27 @@ function buildUI() {
     createElement("player-names-2-input-box-div", "div", ["form-text"], "player-2-helper-text", "Leave blank to accept default (O)");
     createElement("player-names-form", "button", ["btn", "btn-primary"], "player-names-form-button", "Let's Play!");
     let playerNamesFormButton = document.getElementById("player-names-form-button");
-    playerNamesFormButton.setAttribute("onclick", "updateNames()");
+    //let eventHandler = "tileClick(" + `'game-board-square-${i}-${j}')`;
+    let player1Parameter = document.getElementById("player-name-1-input-box");
+    let player2Parameter = document.getElementById("player-name-2-input-box");
+    let player1ParameterValue = player1Parameter.value;
+    let player2ParameterValue = player2Parameter.value;
+    let changeNamesParameters = "updateNames(" + player1ParameterValue + ", " + player2ParameterValue +")";
+    playerNamesFormButton.setAttribute("onclick", changeNamesParameters);
     playerNamesFormButton.setAttribute("type", "submit");
+
+    */
     createElement("newGameContent", "div", ["modal-footer"], "newGameFooter");
     createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Dismiss");
     addModalCloseButton("newGameFooterCloseButton");
 };
 
-function updateNames() {
+function updateNames(player1, player2) {
   console.log("This is the updateNames function.");
+  console.log("Player 1: ", player1);
+  console.log("Player 2: ", player2);
   //updateDisplay();
-}
+};
 
   buildUI();
   newGame();
