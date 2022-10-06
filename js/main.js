@@ -7,6 +7,7 @@ let gameState = {
   playerName2: "O",
   playerSymbol2: "O",
   gameBoard: ["", "", "", "", "", "", "", "", ""],
+  clickedID: "";
   turn: 1,
   gameOver: false,
   whoseTurn: 1
@@ -15,6 +16,13 @@ let gameState = {
 function tileClick(address) {
   console.log("You clicked a button! ", address, ", to be specific.");
 }
+
+function newGame() {
+  console.log("This is the new game function.");
+
+}
+
+// show	Manually opens a modal. Returns to the caller before the modal has actually been shown (i.e. before the shown.bs.modal event occurs). Also, you can pass a DOM element as an argument that can be received in the modal events (as the relatedTarget property). (i.e. const modalToggle = document.getElementById('toggleMyModal'); myModal.show(modalToggle).
 
 function buildUI() {
     // Creates HTML elements
@@ -135,6 +143,33 @@ function buildUI() {
     createElement("contactContent", "div", ["modal-footer"], "contactFooter");
     createElement("contactFooter", "button", ["btn", "btn-secondary"], "contactFooterCloseButton", "Dismiss");
     addModalCloseButton("contactFooterCloseButton");
-  };
+
+    // Invalid Move Modal
+    createElement("appContainer", "div", ["modal", "fade"], "invalid-move-modal");
+    createElement("invalid-move-modal", "div", ["modal-dialog"], "invalidMoveDialog");
+    createElement("invalidMoveDialog", "div", ["modal-content"], "invalidMoveContent");
+    createElement("invalidMoveContent", "div", ["modal-header"], "invalidMoveHeader");
+    createElement("invalidMoveHeader", "h5", ["modal-title"], "invalidMoveTitle", "Error");
+    createElement("invalidMoveHeader", "button", ["btn-close"], "invalidMoveHeaderBtn");
+    addModalCloseButton("invalidMoveHeaderBtn");
+    createElement("invalidMoveContent", "div", ["modal-body"], "invalidMoveBody", "Invalid move. Please select again.");
+    createElement("invalidMoveContent", "div", ["modal-footer"], "invalidMoveFooter");
+    createElement("invalidMoveFooter", "button", ["btn", "btn-secondary"], "invalidMoveFooterCloseButton", "Dismiss");
+    addModalCloseButton("invalidMoveFooterCloseButton");
+    // addModalTrigger("invalidMove", "contactModal"); THIS IS BROKEN
+
+    // New Game Modal
+    createElement("appContainer", "div", ["modal", "fade"], "newGameModal");
+    createElement("newGameModal", "div", ["modal-dialog"], "newGameDialog");
+    createElement("newGameDialog", "div", ["modal-content"], "newGameContent");
+    createElement("newGameContent", "div", ["modal-header"], "newGameHeader");
+    createElement("newGameHeader", "h5", ["modal-title"], "aboutTitle", "Tic-Tac-Toe: New Game");
+    createElement("newGameHeader", "button", ["btn-close"], "newGameHeaderBtn");
+    addModalCloseButton("newGameHeaderBtn");
+    createElement("newGameContent", "div", ["modal-body"], "newGameBody", "This is the new game modal!");
+    createElement("newGameContent", "div", ["modal-footer"], "newGameFooter");
+    createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Dismiss");
+    addModalCloseButton("newGameFooterCloseButton");
+};
 
   buildUI();
