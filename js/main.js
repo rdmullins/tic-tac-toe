@@ -10,7 +10,7 @@ let gameState = {
   clickedID: "",
   turn: 1,
   gameOver: false,
-  whoseTurn: 1
+  whoseTurn: "X"
 };
 
 function updateDisplay() {
@@ -25,12 +25,13 @@ function updateDisplay() {
 };
 
 function tileClick(address) {
-  console.log("Tile click.");
+  console.log("Tile click. Incoming address is ", address);
   let gameSquareIndex = convertTileAddressToArrayIndex(address);
+  console.log("That's array element ", gameSquareIndex);
+
   if (checkSquare(gameSquareIndex)) { 
-    gameState.clickedID = gameSquareIndex;
-    gamePlay(gameSquareIndex);
-    
+    //gameState.clickedID = gameSquareIndex;
+    gamePlay(gameSquareIndex);    
   } else {
     invalidMove();
   }
@@ -135,11 +136,22 @@ function newGame() {
   //console.log("This is the new game function.");
   const showNewGame = new bootstrap.Modal("#newGameModal");
   showNewGame.show("newGameModalTrigger");
-}
+};
 
 function gamePlay(address) {
   console.log("Incoming address is ", address);
-  while (gameState.gameOver !== true) {
+  if (gameState.gameOver !== true) {
+    gameState.gameBoard[address] = gameState.whoseTurn;
+    gameState.turn++;
+    if (gameState.whoseTurn == "X") {
+        gameState.whoseTurn = "O";
+    } else {
+        gameState.whoseTurn = "X";
+    };
+    checkForWin(gameState.whoseTurn);
+  };
+  updateDisplay();
+};
     //console.log(clear());
     //let playerName = "";
     //let playerSymbol = "";
@@ -166,14 +178,9 @@ function gamePlay(address) {
     // };
 
     //checkForWin(playerSymbol);
-    gameState.turn++;
-    if (gameState.whoseTurn == 1) {
-        gameState.whoseTurn = 2;
-    } else {
-        gameState.whoseTurn = 1;
-    }
-  }
-};
+
+
+
 
 function buildUI() {
     // Creates HTML elements
