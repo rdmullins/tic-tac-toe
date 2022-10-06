@@ -1,6 +1,10 @@
 // Tic-Tac-Toe
 // by Roger Mullins
 
+function tileClick(address) {
+  console.log("You clicked a button! ", address, ", to be specific.");
+}
+
 function buildUI() {
     // Creates HTML elements
   
@@ -42,7 +46,7 @@ function buildUI() {
     };
   
     // Main Application Container
-    createElement("main", "div", ["container"], "appContainer");
+    createElement("app", "div", ["container"], "appContainer");
   
     // Navigation Bar
     createElement("appContainer", "nav", ['navbar', 'navbar-expand-sm', 'py-3'], "navbar");
@@ -60,11 +64,40 @@ function buildUI() {
     addModalTrigger("contact-link", "contactModal");
   
     // Title Box
+    createElement("appContainer", "div", ["row"], "title-box");
+    createElement("title-box", "div", ["row", "d-block", "align-items-center", "display-6"], "title-box-row");
+    createElement("title-box-row", "p", ["text-center"], "title-text", "Tic-Tac-Toe");
+
+    // Whose Turn?
+    createElement("appContainer", "div", ["row"], "whose-turn-row");
+    createElement("whose-turn-row", "div", ["col"], "whose-turn-col");
+    createElement("whose-turn-col", "p", ["text-center"], "whose-turn-text");     // whose-turn-text
   
+    // Game Board
+    createElement("appContainer", "div", ["row"], "main-game-board-container");
+
+    for (let i=1; i<=3; i++) {
+    createElement("main-game-board-container", "div", ["row"], `game-board-row-${i}`);
+    let tile = document.getElementById(`game-board-row-${i}`);
+    tile.setAttribute("style", "height: 20vh");
+      for (let j=1; j<=3; j++) {
+        createElement(`game-board-row-${i}`, "div", ["col-4", "border", "border-dark"], `game-board-square-${i}-${j}`);
+        let gameSquare = document.getElementById(`game-board-square-${i}-${j}`);
+        let eventHandler = "tileClick(" + `'game-board-square-${i}-${j}')`;
+        gameSquare.setAttribute("onclick", eventHandler);
+      };
+    };
+
+    // Reset Button
+    createElement("appContainer", "div", ["row", "align-items-center"], "reset-button-row");
+    let resetRow = document.getElementById("reset-button-row");
+    resetRow.setAttribute("style", "height: 20vh");
+    createElement("reset-button-row", "div", ["col", "text-center"], "reset-button-col");
+    createElement("reset-button-col", "button", ["btn", "btn-primary"], "reset-button", "Reset Game");
+
     // Footer (Attribution of FavIcon and API)
-    createElement("main", "footer", [], "footer-info");
-    createElement("footer-info", "h6", ["text-center"], "favicon-attribution", "FavIcon provided by https://www.flaticon.com/free-icons/weather");
-    createElement("footer-info", "h6", ["text-center"], "API-attribution", "Data from www.openweathermap.org");
+    createElement("app", "footer", [], "footer-info");
+    createElement("footer-info", "h6", ["text-center", "fixed-bottom"], "favicon-attribution", "FavIcon provided by https://www.flaticon.com/free-icons/toy\nToy icons created by Freepik - Flaticon");
   
     // About Modal
     createElement("appContainer", "div", ["modal", "fade"], "aboutModal");
@@ -92,3 +125,5 @@ function buildUI() {
     createElement("contactFooter", "button", ["btn", "btn-secondary"], "contactFooterCloseButton", "Dismiss");
     addModalCloseButton("contactFooterCloseButton");
   };
+
+  buildUI();
