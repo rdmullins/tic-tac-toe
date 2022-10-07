@@ -150,7 +150,7 @@ function checkForWin(playerSymbol) {
           gameOverUpdate.innerText = "\n\nGame Over!\n\n" + playerSymbol + " Wins!";
           gameOver();
           newGame();
-      } else if (gameState.turn === 9) {
+      } else if (gameState.turn === 10) {
           gameOverUpdate.innerText = "\n\nGame Over!\n\n\nThat's a Tie!\n";
           gameOver();
           newGame();
@@ -267,7 +267,7 @@ function buildUI() {
     let tile = document.getElementById(`game-board-row-${i}`);
     tile.setAttribute("style", "height: 20vh");
       for (let j=1; j<=3; j++) {
-        createElement(`game-board-row-${i}`, "div", ["col-4", "border", "border-dark"], `game-board-square-${i}-${j}`);
+        createElement(`game-board-row-${i}`, "div", ["col-4", "border", "border-dark", "display-6", "p-5", "text-center"], `game-board-square-${i}-${j}`);
         let gameSquare = document.getElementById(`game-board-square-${i}-${j}`);
         let eventHandler = "tileClick(" + `'game-board-square-${i}-${j}')`;
         gameSquare.setAttribute("onclick", eventHandler);
