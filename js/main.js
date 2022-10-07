@@ -90,6 +90,12 @@ function invalidMove() {
   // this will work the same as the newGame function as far as the modal is concerned.
 }
 
+function gameOver() {
+  console.log("Game over!");
+  const showGameOver = new bootstrap.Modal("#gameOverModal");
+  showGameOver.show("gameOverModalTrigger");
+}
+
 function checkSquare(square) {
   console.log("Welcome to the checkSquare function!");
   if (gameState.gameBoard[square] === "") {
@@ -137,6 +143,7 @@ function checkForWin(playerSymbol) {
           console.log("Game Over!");
           console.log(playerSymbol, " wins!!!");
           gameState.gameOver = true;
+          gameOver();
       }        
   };
 
@@ -168,35 +175,6 @@ function gamePlay(address) {
   };
   updateDisplay();
 };
-    //console.log(clear());
-    //let playerName = "";
-    //let playerSymbol = "";
-    //console.log("Turn number ", gameState.turn);
-    
-    // if (gameState.whoseTurn == 1) {
-    //     playerName = gameState.playerName1;
-    //     playerSymbol = gameState.playerSymbol1;
-    // } else {
-    //     playerName = gameState.playerName2;
-    //     playerSymbol = gameState.playerSymbol2;
-    // }
-    // console.log(`It is ${playerName}'s turn.`);
-    // let choice = prompt(`${playerName}, choose a game square 1-9.`);
-
-    // if (checkSquare(address)) {
-    //     console.log("Valid square selection.");
-    //     console.log(playerName, " plays square number ", choice);
-    //     updateBoard(playerSymbol, choice-1);
-    //     console.log("Updated game board:");
-    //     renderBoard();
-    // } else {
-    //     console.log("Invalid selection.");
-    // };
-
-    //checkForWin(playerSymbol);
-
-
-
 
 function buildUI() {
     // Creates HTML elements
@@ -387,6 +365,19 @@ function buildUI() {
     createElement("newGameContent", "div", ["modal-footer"], "newGameFooter");
     createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Dismiss");
     addModalCloseButton("newGameFooterCloseButton");
+
+    // Invalid Move Modal
+    createElement("appContainer", "div", ["modal", "fade"], "gameOverModal");
+    createElement("gameOverModal", "div", ["modal-dialog"], "gameOverDialog");
+    createElement("gameOverDialog", "div", ["modal-content"], "gameOverContent");
+    createElement("gameOverContent", "div", ["modal-header"], "gameOverHeader");
+    createElement("gameOverHeader", "h5", ["modal-title"], "gameOverTitle", "Error");
+    createElement("gameOverHeader", "button", ["btn-close"], "gameOverHeaderBtn");
+    addModalCloseButton("gameOverHeaderBtn");
+    createElement("gameOverContent", "div", ["modal-body"], "gameOverBody", "Game Over!");
+    createElement("gameOverContent", "div", ["modal-footer"], "gameOverFooter");
+    createElement("gameOverFooter", "button", ["btn", "btn-secondary"], "gameOverFooterCloseButton", "Dismiss");
+    addModalCloseButton("gameOverFooterCloseButton");
 };
 
 function updateNames(player1, player2) {
