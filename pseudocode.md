@@ -136,3 +136,14 @@ Also need to track
 
 
 Stretch - add CSS transition on block so it rotates
+
+# AI?
+Let the computer play by selecting one of the squares on the "O" turn.
+
+Add a mode to the gameObject
+X plays like normal
+On O's turn:
+check the gameBoard array and note empty squares
+randomly pick one of those squares
+tileClick() 
+Set a timeout so it's more realistic?

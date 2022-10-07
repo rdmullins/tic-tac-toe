@@ -31,10 +31,31 @@ function updateDisplay() {
   }
 };
 
+function computersTurn() {
+  let availableSquares = [""];
+  for (let i = 0; i <= gameState.gameBoard.length; i ++) {
+    if (gameState.gameBoard[i] == "") {
+      availableSquares = availableSquares + i;
+    }
+  }
+
+  let chosenSquare = Math.floor(Math.random() * availableSquares.length);
+
+  console.log("Available squares are: ", availableSquares);
+
+  console.log("Computer chooses square ", chosenSquare);
+
+  gamePlay(chosenSquare);
+  // gameState.gameBoard[chosenSquare] = "O";
+  // gameState.turn++;
+  updateDisplay();
+
+}
+
 function tileClick(address) {
-  console.log("Tile click. Incoming address is ", address);
+  //console.log("Tile click. Incoming address is ", address);
   let gameSquareIndex = convertTileAddressToArrayIndex(address);
-  console.log("That's array element ", gameSquareIndex);
+  //console.log("That's array element ", gameSquareIndex);
 
   if (checkSquare(gameSquareIndex)) { 
     //gameState.clickedID = gameSquareIndex;
@@ -92,13 +113,13 @@ function invalidMove() {
 }
 
 function gameOver() {
-  console.log("Game over!");
+  //console.log("Game over!");
   const showGameOver = new bootstrap.Modal("#gameOverModal");
   showGameOver.show("gameOverModalTrigger");
 }
 
 function checkSquare(square) {
-  console.log("Welcome to the checkSquare function!");
+  //console.log("Welcome to the checkSquare function!");
   if (gameState.gameBoard[square] === "") {
       return true;
   } else {
@@ -142,10 +163,10 @@ function checkForWin(playerSymbol) {
           (b[4] === b[6]) &&
           (b[2] !== "")
       )) {
-          console.log("Game Over!");
-          console.log(playerSymbol, " wins!!!");
+          // console.log("Game Over!");
+          // console.log(playerSymbol, " wins!!!");
           gameState.winner = playerSymbol;
-          console.log("Game Winner set to ", gameState.winner);
+          // console.log("Game Winner set to ", gameState.winner);
           gameState.gameOver = true;
           gameOverUpdate.innerText = "\n\nGame Over!\n\n" + playerSymbol + " Wins!";
           gameOver();
@@ -173,7 +194,7 @@ function newGame() {
 };
 
 function gamePlay(address) {
-  console.log("Incoming address is ", address);
+  //console.log("Incoming address is ", address);
   if (gameState.gameOver !== true) {
     gameState.gameBoard[address] = gameState.whoseTurn;
     gameState.turn++;
@@ -250,7 +271,7 @@ function buildUI() {
     addModalTrigger("contact-link", "contactModal");
   
     // Title Box
-    createElement("appContainer", "div", ["row"], "title-box");
+    createElement("appContainer", "div", ["row", "justify-content-center"], "title-box");
     createElement("title-box", "div", ["row", "d-block", "align-items-center", "display-6"], "title-box-row");
     createElement("title-box-row", "p", ["text-center"], "title-text", "Tic-Tac-Toe");
 
@@ -260,14 +281,14 @@ function buildUI() {
     createElement("whose-turn-col", "p", ["text-center"], "whose-turn-text");     // whose-turn-text
   
     // Game Board
-    createElement("appContainer", "div", ["row"], "main-game-board-container");
+    createElement("appContainer", "div", ["row", "justify-content-center"], "main-game-board-container");
 
     for (let i=1; i<=3; i++) {
     createElement("main-game-board-container", "div", ["row"], `game-board-row-${i}`);
     let tile = document.getElementById(`game-board-row-${i}`);
     tile.setAttribute("style", "height: 20vh");
       for (let j=1; j<=3; j++) {
-        createElement(`game-board-row-${i}`, "div", ["col-4", "border", "border-dark", "display-6", "p-5", "text-center"], `game-board-square-${i}-${j}`);
+        createElement(`game-board-row-${i}`, "div", ["col-4", "border", "border-dark", "display-6", "p-5", "text-center", "justify-content-center"], `game-board-square-${i}-${j}`);
         let gameSquare = document.getElementById(`game-board-square-${i}-${j}`);
         let eventHandler = "tileClick(" + `'game-board-square-${i}-${j}')`;
         gameSquare.setAttribute("onclick", eventHandler);
@@ -397,7 +418,7 @@ function buildUI() {
 };
 
 function updateNames() {
-  console.log("This is the updateNames function.");
+  //console.log("This is the updateNames function.");
   //console.log("Player 1: ", player1);
   //console.log("Player 2: ", player2);
   let player1name = prompt("Enter Player 1 Name.");
