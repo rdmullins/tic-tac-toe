@@ -2,15 +2,16 @@
 // by Roger Mullins
 
 let gameState = {
-  playerName1: "Justin",
+  playerName1: "X",
   playerSymbol1: "X",
-  playerName2: "Jonathan",
+  playerName2: "O",
   playerSymbol2: "O",
   gameBoard: ["", "", "", "", "", "", "", "", ""],
-  clickedID: "",
+  //clickedID: "",
   turn: 1,
   gameOver: false,
-  whoseTurn: "X"
+  whoseTurn: "X",
+  winner: ""
 };
 
 function updateDisplay() {
@@ -106,6 +107,7 @@ function checkSquare(square) {
 };
 
 function checkForWin(playerSymbol) {
+  let gameOverUpdate = document.getElementById("game-over-string");
   let b = gameState.gameBoard;
       if ((
           (b[0] === b[1]) &&
@@ -142,9 +144,17 @@ function checkForWin(playerSymbol) {
       )) {
           console.log("Game Over!");
           console.log(playerSymbol, " wins!!!");
+          gameState.winner = playerSymbol;
+          console.log("Game Winner set to ", gameState.winner);
           gameState.gameOver = true;
+          gameOverUpdate.innerText = "\n\nGame Over!\n\n" + playerSymbol + " Wins!";
           gameOver();
-      }        
+          newGame();
+      } else if (gameState.turn === 10) {
+          gameOverUpdate.innerText = "\n\nGame Over!\n\n\nThat's a Tie!\n";
+          gameOver();
+          newGame();
+      }     
   };
 
 function newGame() {
@@ -155,6 +165,7 @@ function newGame() {
   gameState.gameOver = false;
   gameState.turn = 1;
   gameState.whoseTurn = "X";
+  gameState.winner = "";
 
   const showNewGame = new bootstrap.Modal("#newGameModal");
   showNewGame.show("newGameModalTrigger");
@@ -256,7 +267,7 @@ function buildUI() {
     let tile = document.getElementById(`game-board-row-${i}`);
     tile.setAttribute("style", "height: 20vh");
       for (let j=1; j<=3; j++) {
-        createElement(`game-board-row-${i}`, "div", ["col-4", "border", "border-dark"], `game-board-square-${i}-${j}`);
+        createElement(`game-board-row-${i}`, "div", ["col-4", "border", "border-dark", "display-6", "p-5", "text-center"], `game-board-square-${i}-${j}`);
         let gameSquare = document.getElementById(`game-board-square-${i}-${j}`);
         let eventHandler = "tileClick(" + `'game-board-square-${i}-${j}')`;
         gameSquare.setAttribute("onclick", eventHandler);
@@ -330,8 +341,10 @@ function buildUI() {
     createElement("newGameHeader", "h5", ["modal-title"], "aboutTitle", "Tic-Tac-Toe: New Game");
     createElement("newGameHeader", "button", ["btn-close"], "newGameHeaderBtn");
     addModalCloseButton("newGameHeaderBtn");
-    createElement("newGameContent", "div", ["modal-body"], "newGameBody", "This is the new game modal!");
-
+    createElement("newGameContent", "div", ["modal-body", "text-center"], "newGameBody", "Welcome to Tic-Tac-Toe!\nPlayers alternate placing their X or O in the boxes.\nThe first player to connect three of the same symbol in a row (vertically, horizontally, or diagonally) wins!");
+    createElement("newGameContent", "button", ["btn", "btn-primary"], "changeNamesButton", "Edit Player Names?");
+    let nameButtonEventHandler = document.getElementById("changeNamesButton");
+    nameButtonEventHandler.setAttribute("onclick", "updateNames()");
     /* Man I really wanted to use this. Apparently there's no good way to retrieve form data.
 
     // Player Names Input
@@ -363,7 +376,7 @@ function buildUI() {
 
     */
     createElement("newGameContent", "div", ["modal-footer"], "newGameFooter");
-    createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Dismiss");
+    createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Let's Play!");
     addModalCloseButton("newGameFooterCloseButton");
 
     // Invalid Move Modal
@@ -371,20 +384,27 @@ function buildUI() {
     createElement("gameOverModal", "div", ["modal-dialog"], "gameOverDialog");
     createElement("gameOverDialog", "div", ["modal-content"], "gameOverContent");
     createElement("gameOverContent", "div", ["modal-header"], "gameOverHeader");
-    createElement("gameOverHeader", "h5", ["modal-title"], "gameOverTitle", "Error");
+    createElement("gameOverHeader", "h5", ["modal-title"], "gameOverTitle", "Game Over");
     createElement("gameOverHeader", "button", ["btn-close"], "gameOverHeaderBtn");
     addModalCloseButton("gameOverHeaderBtn");
-    createElement("gameOverContent", "div", ["modal-body"], "gameOverBody", "Game Over!");
+    //let winner = gameState.winner;
+    // let winString = ("Game Over! " + gameState.winner + " Wins!");
+    // createElement("gameOverContent", "div", ["modal-body"], "gameOverBody", winString);
+    createElement("gameOverContent", "p", ["text-center"], "game-over-string");
     createElement("gameOverContent", "div", ["modal-footer"], "gameOverFooter");
     createElement("gameOverFooter", "button", ["btn", "btn-secondary"], "gameOverFooterCloseButton", "Dismiss");
     addModalCloseButton("gameOverFooterCloseButton");
 };
 
-function updateNames(player1, player2) {
+function updateNames() {
   console.log("This is the updateNames function.");
-  console.log("Player 1: ", player1);
-  console.log("Player 2: ", player2);
-  //updateDisplay();
+  //console.log("Player 1: ", player1);
+  //console.log("Player 2: ", player2);
+  let player1name = prompt("Enter Player 1 Name.");
+  let player2name = prompt("Enter Player 2 Name.");
+  gameState.playerName1 = player1name;
+  gameState.playerName2 = player2name;
+  updateDisplay();
 };
 
   buildUI();
