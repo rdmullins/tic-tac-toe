@@ -342,7 +342,9 @@ function buildUI() {
     createElement("newGameHeader", "button", ["btn-close"], "newGameHeaderBtn");
     addModalCloseButton("newGameHeaderBtn");
     createElement("newGameContent", "div", ["modal-body", "text-center"], "newGameBody", "Welcome to Tic-Tac-Toe!\nPlayers alternate placing their X or O in the boxes.\nThe first player to connect three of the same symbol in a row (vertically, horizontally, or diagonally) wins!");
-
+    createElement("newGameContent", "button", ["btn", "btn-primary"], "changeNamesButton", "Edit Player Names?");
+    let nameButtonEventHandler = document.getElementById("changeNamesButton");
+    nameButtonEventHandler.setAttribute("onclick", "updateNames()");
     /* Man I really wanted to use this. Apparently there's no good way to retrieve form data.
 
     // Player Names Input
@@ -374,7 +376,7 @@ function buildUI() {
 
     */
     createElement("newGameContent", "div", ["modal-footer"], "newGameFooter");
-    createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Dismiss");
+    createElement("newGameFooter", "button", ["btn", "btn-secondary"], "newGameFooterCloseButton", "Let's Play!");
     addModalCloseButton("newGameFooterCloseButton");
 
     // Invalid Move Modal
@@ -394,11 +396,15 @@ function buildUI() {
     addModalCloseButton("gameOverFooterCloseButton");
 };
 
-function updateNames(player1, player2) {
+function updateNames() {
   console.log("This is the updateNames function.");
-  console.log("Player 1: ", player1);
-  console.log("Player 2: ", player2);
-  //updateDisplay();
+  //console.log("Player 1: ", player1);
+  //console.log("Player 2: ", player2);
+  let player1name = prompt("Enter Player 1 Name.");
+  let player2name = prompt("Enter Player 2 Name.");
+  gameState.playerName1 = player1name;
+  gameState.playerName2 = player2name;
+  updateDisplay();
 };
 
   buildUI();
