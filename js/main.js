@@ -2,12 +2,12 @@
 // by Roger Mullins
 
 let gameState = {
-  playerName1: "Justin",
+  playerName1: "X",
   playerSymbol1: "X",
-  playerName2: "Jonathan",
+  playerName2: "O",
   playerSymbol2: "O",
   gameBoard: ["", "", "", "", "", "", "", "", ""],
-  clickedID: "",
+  //clickedID: "",
   turn: 1,
   gameOver: false,
   whoseTurn: "X",
@@ -107,6 +107,7 @@ function checkSquare(square) {
 };
 
 function checkForWin(playerSymbol) {
+  let gameOverUpdate = document.getElementById("game-over-string");
   let b = gameState.gameBoard;
       if ((
           (b[0] === b[1]) &&
@@ -146,10 +147,14 @@ function checkForWin(playerSymbol) {
           gameState.winner = playerSymbol;
           console.log("Game Winner set to ", gameState.winner);
           gameState.gameOver = true;
-          let gameOverUpdate = document.getElementById("game-over-string");
-          gameOverUpdate.innerText = "Game Over! " + playerSymbol + " Wins!";
+          gameOverUpdate.innerText = "\n\nGame Over!\n\n" + playerSymbol + " Wins!";
           gameOver();
-      }        
+          newGame();
+      } else if (gameState.turn === 9) {
+          gameOverUpdate.innerText = "\n\nGame Over!\n\n\nThat's a Tie!\n";
+          gameOver();
+          newGame();
+      }     
   };
 
 function newGame() {
@@ -160,6 +165,7 @@ function newGame() {
   gameState.gameOver = false;
   gameState.turn = 1;
   gameState.whoseTurn = "X";
+  gameState.winner = "";
 
   const showNewGame = new bootstrap.Modal("#newGameModal");
   showNewGame.show("newGameModalTrigger");
@@ -335,7 +341,7 @@ function buildUI() {
     createElement("newGameHeader", "h5", ["modal-title"], "aboutTitle", "Tic-Tac-Toe: New Game");
     createElement("newGameHeader", "button", ["btn-close"], "newGameHeaderBtn");
     addModalCloseButton("newGameHeaderBtn");
-    createElement("newGameContent", "div", ["modal-body"], "newGameBody", "This is the new game modal!");
+    createElement("newGameContent", "div", ["modal-body", "text-center"], "newGameBody", "Welcome to Tic-Tac-Toe!\nPlayers alternate placing their X or O in the boxes.\nThe first player to connect three of the same symbol in a row (vertically, horizontally, or diagonally) wins!");
 
     /* Man I really wanted to use this. Apparently there's no good way to retrieve form data.
 
