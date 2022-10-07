@@ -10,7 +10,8 @@ let gameState = {
   clickedID: "",
   turn: 1,
   gameOver: false,
-  whoseTurn: "X"
+  whoseTurn: "X",
+  winner: ""
 };
 
 function updateDisplay() {
@@ -142,7 +143,11 @@ function checkForWin(playerSymbol) {
       )) {
           console.log("Game Over!");
           console.log(playerSymbol, " wins!!!");
+          gameState.winner = playerSymbol;
+          console.log("Game Winner set to ", gameState.winner);
           gameState.gameOver = true;
+          let gameOverUpdate = document.getElementById("game-over-string");
+          gameOverUpdate.innerText = "Game Over! " + playerSymbol + " Wins!";
           gameOver();
       }        
   };
@@ -371,10 +376,13 @@ function buildUI() {
     createElement("gameOverModal", "div", ["modal-dialog"], "gameOverDialog");
     createElement("gameOverDialog", "div", ["modal-content"], "gameOverContent");
     createElement("gameOverContent", "div", ["modal-header"], "gameOverHeader");
-    createElement("gameOverHeader", "h5", ["modal-title"], "gameOverTitle", "Error");
+    createElement("gameOverHeader", "h5", ["modal-title"], "gameOverTitle", "Game Over");
     createElement("gameOverHeader", "button", ["btn-close"], "gameOverHeaderBtn");
     addModalCloseButton("gameOverHeaderBtn");
-    createElement("gameOverContent", "div", ["modal-body"], "gameOverBody", "Game Over!");
+    //let winner = gameState.winner;
+    // let winString = ("Game Over! " + gameState.winner + " Wins!");
+    // createElement("gameOverContent", "div", ["modal-body"], "gameOverBody", winString);
+    createElement("gameOverContent", "p", ["text-center"], "game-over-string");
     createElement("gameOverContent", "div", ["modal-footer"], "gameOverFooter");
     createElement("gameOverFooter", "button", ["btn", "btn-secondary"], "gameOverFooterCloseButton", "Dismiss");
     addModalCloseButton("gameOverFooterCloseButton");
